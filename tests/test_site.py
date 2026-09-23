@@ -9,8 +9,9 @@ import sys
 from threading import Thread
 import unittest
 
-ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "scripts"))
+REPO = Path(__file__).resolve().parents[1]
+ROOT = REPO / "dist"
+sys.path.insert(0, str(REPO / "scripts"))
 from preview import ASSETS, PreviewHandler
 
 
@@ -39,6 +40,26 @@ class SiteTests(unittest.TestCase):
             if tag == "img":
                 self.assertIn("alt", attrs)
 
+    def test_generated_asset_inventory(self):
+        generated = {str(path.relative_to(ROOT)) for path in ROOT.rglob("*") if path.is_file()}
+        self.assertEqual(generated, {filename for filename, _ in ASSETS.values()})
+
+    def test_all_pages_have_landmarks_and_no_active_content(self):
+        for filename, content_type in set(ASSETS.values()):
+            if not content_type.startswith("text/html"):
+                continue
+            with self.subTest(filename=filename):
+                elements = Document((ROOT / filename).read_text()).elements
+                counts = Counter(tag for tag, _ in elements)
+                self.assertEqual(counts["main"], 1)
+                self.assertEqual(counts["h1"], 1)
+                ids = [attrs["id"] for _, attrs in elements if "id" in attrs]
+                self.assertEqual(len(ids), len(set(ids)))
+                for tag, attrs in elements:
+                    self.assertNotIn(tag, {"script", "iframe", "form", "object", "embed"})
+                    self.assertFalse(any(key.startswith("on") for key in attrs))
+                self.assertTrue(any(tag == "html" and attrs.get("lang") == "en" for tag, attrs in elements))
+
     def test_local_links_and_unique_ids(self):
         ids = [attrs["id"] for _, attrs in self.elements if "id" in attrs]
         self.assertEqual(len(ids), len(set(ids)))
@@ -47,7 +68,7 @@ class SiteTests(unittest.TestCase):
             if href.startswith("#") and href != "#":
                 self.assertIn(href[1:], ids)
             if tag == "a" and not href.startswith("#"):
-                self.assertEqual(href, "https://github.com/vollmachtio")
+                self.assertTrue(href in ASSETS or href == "https://github.com/vollmachtio")
 
     def test_no_active_or_third_party_content(self):
         forbidden = {"script", "iframe", "form", "input", "object", "embed", "base"}
@@ -56,8 +77,9 @@ class SiteTests(unittest.TestCase):
             self.assertFalse(any(key.startswith("on") for key in attrs))
             for key in ("src", "href"):
                 if key in attrs and tag in {"img", "link"}:
-                    self.assertIn("/" + attrs[key], ASSETS)
-                    self.assertTrue((ROOT / attrs[key]).is_file())
+                    route = "/" + attrs[key].lstrip("/")
+                    self.assertIn(route, ASSETS)
+                    self.assertTrue((ROOT / ASSETS[route][0]).is_file())
         css = (ROOT / "style.css").read_text().lower()
         self.assertNotIn("@import", css)
         self.assertNotIn("url(", css)

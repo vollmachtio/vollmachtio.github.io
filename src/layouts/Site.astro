@@ -1,0 +1,25 @@
+---
+const { title = 'Keep authority human', description = 'Verifiable, bounded human authority for AI agents.' } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content={description} />
+<meta name="color-scheme" content="light" />
+<title>{title} · Vollmacht</title>
+<link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="masthead wrap">
+<a class="brand" href="/" aria-label="Vollmacht home"><img src="/brand.png" width="44" height="44" alt="" />Vollmacht</a>
+<nav aria-label="Main navigation">
+<a href="/concepts/">Concepts</a><a href="/quickstart/">Docs</a><a href="/security/">Security</a><a href="https://github.com/vollmachtio">GitHub <span aria-hidden="true">↗</span></a>
+</nav>
+</header>
+<slot />
+<footer class="wrap"><span class="footer-brand">Vollmacht</span><span>Verifiable human authority for AI agents.</span><a href="/standards/">Standards</a><a href="#main">Back to top ↑</a></footer>
+</body>
+</html>

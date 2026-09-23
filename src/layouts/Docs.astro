@@ -1,0 +1,19 @@
+---
+import Site from './Site.astro';
+const { frontmatter } = Astro.props;
+const links = [['Quickstart', '/quickstart/'], ['Human Mandates', '/concepts/'], ['Architecture', '/architecture/'], ['Security', '/security/'], ['Standards', '/standards/']];
+---
+<Site title={frontmatter.title} description={frontmatter.description}>
+<main id="main" tabindex="-1" class="docs-shell wrap">
+<nav class="docs-nav" aria-label="Documentation">
+{links.map(([label, href]) => <a href={href} aria-current={Astro.url.pathname === href ? 'page' : undefined}>{label}</a>)}
+</nav>
+<article class="prose">
+<p class="eyebrow">Experimental · Design and research</p>
+<h1>{frontmatter.title}</h1>
+<p class="doc-summary">{frontmatter.description}</p>
+<p class="doc-notice">Not a released authorization system. Do not use as the sole control for production-critical operations.</p>
+<slot />
+</article>
+</main>
+</Site>

@@ -1,30 +1,43 @@
 # Vollmacht website
 
-Private, unpublished website development for Vollmacht: verifiable human authority for AI agents.
+Private, unpublished website development. Astro generates static HTML from shared layouts and Markdown. No client JavaScript, analytics, external fonts, authentication or live approvals.
 
-## Local preview
+## Run locally
 
-Run `python3 scripts/preview.py` and visit http://127.0.0.1:4173. The server binds only to loopback and serves the three public site assets, not repository metadata. Stop with Ctrl+C.
+Use Node 26.5.1 (see .node-version), npm and Python 3.12 or later.
 
-Run `python3 -m unittest discover -s tests -v` for structural and preview-server checks. Python 3.12 or later is recommended. No third-party dependencies are needed.
+1. Run `npm ci` to install locked dependencies with lifecycle scripts disabled.
+2. Run `npm run build` to generate dist. Build telemetry is disabled.
+3. Run `npm run preview` and open http://127.0.0.1:4173.
+4. Stop with Ctrl+C.
 
-## Scope
+The loopback-only preview serves an explicit allowlist of generated assets. Repository metadata and source files are not served. Rebuild after editing. Package scripts target macOS and Linux.
 
-This first PR is a static HTML/CSS design implementation. It has no JavaScript, analytics, external fonts, forms, authentication, or deployment workflow. Approval cards and workflows are illustrations, not functional integrations. The logo is copied unchanged from the Vollmacht project's approved brand assets.
+## Checks
 
-The page explicitly labels the project experimental and explains selective approval, local biometric verification, and enforcement limitations. It is not a production authorization product.
+- `npm test`: static build and Python structural/server regressions.
+- `npx playwright install chromium`: one-time test browser installation.
+- `npm run test:browser`: all six pages at 320, 390, 768 and 1440 pixels, axe accessibility rules, keyboard skip link and internal links/fragments.
+- `npm run check:external`: bounded external requests with a source-host allowlist, no credentials and per-hop redirect validation. Network failures fail this separate CI job. External fragments are not checked.
+- `npm audit`: current known dependency advisories, not a security certification.
 
-## Review and publishing
+Browser checks require a built dist and a free port 4174. They start their own server and never reuse an existing service. Tests do not trigger Touch ID or contact GitHub APIs. Accessibility automation does not replace manual keyboard and screen-reader review.
 
-Keep changes in small PRs. Require independent adversarial review, focusing on consequential bugs, misleading security claims, data exposure and broken workflows. Automated checks do not replace browser or accessibility review.
+## Structure
 
-The repository is private. GitHub Pages is disabled. Do not enable Pages, publish a preview, change visibility or configure DNS without owner approval. No public license is selected in this PR.
+- src/pages/index.astro: approved editorial homepage.
+- src/pages/*.md: concepts, architecture, security, standards and an honest quickstart.
+- src/layouts: shared HTML shell and documentation layout.
+- public: original brand PNG and shared CSS.
+- scripts/preview.py: narrow generated-site preview.
+- tests: structural, server, responsive, accessibility and link checks.
 
-## Next PRs
+Add routes to the preview allowlist and browser route list together. CI checks generated routes match the allowlist. Never place secrets or source material in public.
 
-1. Establish shared layouts and Markdown docs in Astro when adding multiple pages.
-2. Add architecture, threat model and standards pages based on reviewed protocol work.
-3. Add automated browser, accessibility and external-link checks.
-4. After launch approval, add reviewed Pages deployment and domain configuration.
+## Content and privacy
 
-Current tests cover selected structural invariants and local serving, not full HTML validity, WCAG conformance or every responsive breakpoint.
+The protocol is experimental. Docs distinguish intended guarantees from feasibility results and label integrations illustrative. Standards metadata was checked against primary sources on 2026-09-22; this is a selected-source overview, not a conformance claim.
+
+The repository remains private and Pages disabled. No deployment workflow, custom domain or public license is added. Publishing or changing visibility requires owner approval.
+
+Keep PRs focused and obtain independent adversarial review. Copilot is supplementary, not a replacement.
