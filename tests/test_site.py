@@ -85,8 +85,17 @@ class SiteTests(unittest.TestCase):
         self.assertNotIn("url(", css)
 
     def test_illustrative_and_security_disclosures(self):
-        for phrase in ("Illustrative workflow", "No purchase or approval is performed", "not available integrations", "User verification is not proof of humanity", "sole control for production-critical operations", "Your policy defines when fresh approval is required"):
+        for phrase in ("Illustrative workflow", "No purchase or approval is performed", "Illustrative integrations in the target design", "User verification is not proof of humanity", "sole control for production-critical operations", "Your policy defines when fresh approval is required"):
             self.assertIn(phrase, self.html)
+
+    def test_vision_roles_and_adoption_boundaries(self):
+        for route in ("index.html", "architecture/index.html"):
+            html = (ROOT / route).read_text()
+            for phrase in ("01 / Human", "02 / Agent", "03 / Verifying service", "Target architecture", "Available today"):
+                self.assertIn(phrase, html)
+        architecture = (ROOT / "architecture/index.html").read_text()
+        for phrase in ("Native service integration", "Vollmacht gateway", "not claims of support", "cannot simply be spent twice", "Payment approval alone"):
+            self.assertIn(phrase, architecture)
 
 
 class PreviewTests(unittest.TestCase):

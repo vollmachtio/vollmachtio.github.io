@@ -2,6 +2,7 @@
 layout: ../layouts/Docs.astro
 title: Human Mandates
 description: Permission for a specific purpose, not unrestricted access.
+vision: true
 ---
 
 ## Approve the commitment, not every step
@@ -12,9 +13,11 @@ Low risk does not mean unlimited authority. Policy must define the allowed actio
 
 ## What a mandate would bind
 
-The proposed payload binds the principal and registered credential, agent key, exact action and resource, constraints, issuer and verifier audience, issue and expiry times, fresh nonce, and a versioned display model. An evidence envelope carries the approval assertion and issuer signature.
+In the target design, a mandate binds the principal and registered credential, agent key, exact action and resource, constraints, issuer and verifier audience, issue and expiry times, fresh nonce, and a versioned display model. An evidence envelope carries the approval assertion and issuer signature. The agent presents that authority to a participating service or a trusted gateway.
 
-These are design requirements, not a finalized interoperable schema. The initial target is one exact operation per mandate, with no wildcards or onward delegation.
+The agent may run on your device or remotely. Verification belongs at the boundary controlling the action, not necessarily on the human's device. A service must have an agreed profile and trusted verification keys; an agent-supplied signature is not self-authenticating authority.
+
+These are design requirements, not a finalized interoperable schema. The initial profile targets one exact operation per mandate, with no wildcards or onward delegation.
 
 ## A concrete example
 
@@ -29,4 +32,3 @@ A valid signature does not establish that the key is trusted, the agent is autho
 Passkey user verification is not universal proof of humanity or proof that someone understood the request. Touch ID is one possible local verification method, not a protocol guarantee.
 
 Continue with the [architecture](/architecture/) and [security boundaries](/security/).
-

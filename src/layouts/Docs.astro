@@ -1,5 +1,6 @@
 ---
 import Site from './Site.astro';
+import AuthorityFlow from '../components/AuthorityFlow.astro';
 const { frontmatter } = Astro.props;
 const links = [['Quickstart', '/quickstart/'], ['Human Mandates', '/concepts/'], ['Architecture', '/architecture/'], ['Security', '/security/'], ['Standards', '/standards/']];
 ---
@@ -12,7 +13,8 @@ const links = [['Quickstart', '/quickstart/'], ['Human Mandates', '/concepts/'],
 <p class="eyebrow">Experimental · Design and research</p>
 <h1>{frontmatter.title}</h1>
 <p class="doc-summary">{frontmatter.description}</p>
-<p class="doc-notice">Not a released authorization system. Do not use as the sole control for production-critical operations.</p>
+{frontmatter.vision ? <p class="doc-notice">Target design. For implementation status and experiments, see <a href="/quickstart/">Available today</a>.</p> : <p class="doc-notice">Not a released authorization system. Do not use as the sole control for production-critical operations.</p>}
+{frontmatter.authorityFlow && <AuthorityFlow />}
 <slot />
 </article>
 </main>
