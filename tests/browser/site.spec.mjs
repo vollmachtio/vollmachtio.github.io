@@ -2,6 +2,15 @@ import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
 const routes = ['/', '/concepts/', '/architecture/', '/security/', '/standards/', '/quickstart/'];
+test('explicit Home navigation returns from every documentation page', async ({ page }) => {
+  for (const route of routes.slice(1)) {
+    await page.goto(route);
+    await page.getByRole('navigation', { name: 'Main navigation', exact: true }).getByRole('link', { name: 'Home', exact: true }).click();
+    await expect(page).toHaveURL('http://127.0.0.1:4174/');
+    await expect(page.locator('h1')).toContainText('Approve the commitment.');
+    await expect(page.getByRole('navigation', { name: 'Main navigation', exact: true }).getByRole('link', { name: 'Home', exact: true })).toHaveAttribute('aria-current', 'page');
+  }
+});
 for (const width of [320, 390, 768, 1440]) {
   for (const route of routes) {
     test(route + ' at ' + width + 'px', async ({ page }) => {

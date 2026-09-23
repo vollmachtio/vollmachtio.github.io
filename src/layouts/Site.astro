@@ -16,6 +16,7 @@ const { title = 'Keep authority human', description = 'Verifiable, bounded human
 <header class="masthead wrap">
 <a class="brand" href="/" aria-label="Vollmacht home"><img src="/brand.png" width="44" height="44" alt="" />Vollmacht</a>
 <nav aria-label="Main navigation">
+<a href="/" aria-current={Astro.url.pathname === '/' ? 'page' : undefined}>Home</a>
 <a href="/concepts/">Concepts</a><a href="/quickstart/">Docs</a><a href="/security/">Security</a><a href="https://github.com/vollmachtio">GitHub <span aria-hidden="true">↗</span></a>
 </nav>
 </header>
