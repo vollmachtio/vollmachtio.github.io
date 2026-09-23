@@ -2,15 +2,18 @@
 
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
+import sys
 from urllib.parse import urlsplit
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[1] / "dist"
 ASSETS = {
     "/": ("index.html", "text/html; charset=utf-8"),
     "/index.html": ("index.html", "text/html; charset=utf-8"),
     "/style.css": ("style.css", "text/css; charset=utf-8"),
     "/brand.png": ("brand.png", "image/png"),
 }
+for page in ("concepts", "architecture", "security", "standards", "quickstart"):
+    ASSETS[f"/{page}/"] = (f"{page}/index.html", "text/html; charset=utf-8")
 
 
 class PreviewHandler(BaseHTTPRequestHandler):
@@ -46,8 +49,11 @@ class PreviewHandler(BaseHTTPRequestHandler):
 
 
 if __name__ == "__main__":
-    with ThreadingHTTPServer(("127.0.0.1", 4173), PreviewHandler) as server:
-        print("Website preview: http://127.0.0.1:4173", flush=True)
+    if not (ROOT / "index.html").is_file():
+        raise SystemExit("Build the website first with npm run build.")
+    port = int(sys.argv[1]) if len(sys.argv) == 2 else 4173
+    with ThreadingHTTPServer(("127.0.0.1", port), PreviewHandler) as server:
+        print(f"Website preview: http://127.0.0.1:{port}", flush=True)
         try:
             server.serve_forever()
         except KeyboardInterrupt:

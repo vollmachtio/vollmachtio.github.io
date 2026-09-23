@@ -1,0 +1,28 @@
+<figure class="authority-flow" aria-label="Human authority flows through an agent to a verifying service">
+  <figcaption>Target architecture · Authority travels with the action</figcaption>
+  <ol class="authority-roles">
+    <li>
+      <span class="category">01 / Human</span>
+      <h3>Grant authority.</h3>
+      <p>Approve a bounded action with a passkey on your personal device.</p>
+      <span class="flow-handoff">Mandate and approval evidence →</span>
+    </li>
+    <li>
+      <span class="category">02 / Agent</span>
+      <h3>Act within it.</h3>
+      <p>Run locally or remotely. Present the mandate and proof of the bound agent key.</p>
+      <span class="flow-handoff">Exact action and agent proof →</span>
+    </li>
+    <li class="verifying-role">
+      <span class="category">03 / Verifying service</span>
+      <h3>Check before committing.</h3>
+      <p>A merchant, payment service, API or trusted gateway checks authority at its enforcement boundary.</p>
+      <span class="flow-handoff">Verify · Apply policy · Reserve use</span>
+    </li>
+  </ol>
+  <div class="flow-outcomes">
+    <p><strong>Valid and permitted:</strong> commit the authorized action, then record its outcome.</p>
+    <p><strong>Invalid, expired or already used:</strong> reject. Missing authority may require a new approval.</p>
+  </div>
+  <p class="flow-caption">Routine work stays within existing permission. Fresh approval is for selected consequential boundaries, not every tool call. Diagram shows roles, not a finalized wire protocol.</p>
+</figure>

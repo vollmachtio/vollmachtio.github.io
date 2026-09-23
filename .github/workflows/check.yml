@@ -5,13 +5,41 @@ on:
     branches: [main]
 permissions:
   contents: read
+env:
+  ASTRO_TELEMETRY_DISABLED: '1'
 jobs:
   check:
     runs-on: ubuntu-24.04
-    timeout-minutes: 5
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - name: Structural and local preview tests
-        run: python3 -m unittest discover -s tests -v
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: .node-version
+          package-manager-cache: false
+      - name: Install locked dependencies without lifecycle scripts
+        run: npm ci
+      - name: Check dependency advisories
+        run: npm audit
+      - name: Build and structural tests
+        run: npm test
+      - name: Install test browser
+        run: npx playwright install chromium
+      - name: Responsive, accessibility and internal link tests
+        run: npm run test:browser
+  external-links:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+        with:
+          node-version-file: .node-version
+          package-manager-cache: false
+      - run: npm ci
+      - run: npm run build
+      - run: npm run check:external
