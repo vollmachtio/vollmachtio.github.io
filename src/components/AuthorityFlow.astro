@@ -1,3 +1,17 @@
+---
+const { simple = false } = Astro.props;
+---
+{simple ? (
+<figure class="authority-flow simple-flow" aria-label="Human authority flows through an agent to a verifying service">
+  <figcaption>Target architecture · A permission travels. A service checks it.</figcaption>
+  <ol class="authority-roles">
+    <li><span class="category">01 / Human</span><h3>You authorize.</h3><p>One ticket. Up to $480. Once.</p><span class="mandate-token">Bounded mandate <span aria-hidden="true">→</span></span></li>
+    <li><span class="category">02 / Agent</span><h3>Your agent acts.</h3><p>It carries your permission with the exact purchase request.</p><span class="mandate-token">Mandate + request <span aria-hidden="true">→</span></span></li>
+    <li class="verifying-role"><span class="category">03 / Verifying service</span><h3>The service checks.</h3><p>The merchant or trusted gateway verifies the mandate and agent, then applies its policy before purchase.</p><span class="verification-boundary">Within the limits? Proceed.<br>Outside them? Reject.</span></li>
+  </ol>
+  <p class="flow-caption">The service enforces the boundary. The agent cannot widen your permission.</p>
+</figure>
+) : (
 <figure class="authority-flow" aria-label="Human authority flows through an agent to a verifying service">
   <figcaption>Target architecture · Authority travels with the action</figcaption>
   <ol class="authority-roles">
@@ -26,3 +40,4 @@
   </div>
   <p class="flow-caption">Routine work stays within existing permission. Fresh approval is for selected consequential boundaries, not every tool call. Diagram shows roles, not a finalized wire protocol.</p>
 </figure>
+)}

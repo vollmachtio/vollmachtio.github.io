@@ -25,11 +25,11 @@ const { title = 'Keep authority human', description = 'Verifiable, bounded human
 <a href="/concepts/">Concepts</a><a href="/quickstart/">Build with us</a><a href="/security/">Security</a><a class="nav-project" href="https://github.com/vollmachtio/vollmacht">GitHub <span aria-hidden="true">↗</span></a>
 </nav>
 </header>
-<div class="star-controls wrap" role="region" aria-label="Background animation">
+{Astro.url.pathname === '/' && <div class="star-controls wrap" role="region" aria-label="Background animation">
 <input class="star-toggle" id="pause-stars" type="checkbox" aria-label="Pause stars" />
-<label class="star-label" for="pause-stars">Pause stars</label>
+<label class="star-label" for="pause-stars"><span aria-hidden="true">✦</span> Pause stars</label>
 <div class="starfield" aria-hidden="true"><span></span><span></span><span></span></div>
-</div>
+</div>}
 <slot />
 <footer class="wrap"><span class="footer-brand">Vollmacht</span><span>Verifiable human authority for AI agents.</span><a href="/standards/">Standards</a><a href="#main">Back to top ↑</a></footer>
 </body>

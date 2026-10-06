@@ -1,14 +1,17 @@
 :root { color-scheme: dark; font-family: Arial, Helvetica, sans-serif; color: #eef2f8; background: #090d15; }
 * { box-sizing: border-box; }
 body { margin: 0; isolation: isolate; }
-.starfield { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; background: radial-gradient(ellipse at 50% 0, #172340 0, transparent 65%); }
-.starfield span { position: absolute; inset: 0; background-image: radial-gradient(circle, #c7d7ff 1px, transparent 1.5px); background-size: 173px 137px; opacity: .2; animation: twinkle 7s ease-in-out infinite alternate; }
-.starfield span:nth-child(2) { background-size: 251px 211px; background-position: 51px 83px; animation-delay: -4s; animation-duration: 11s; }
-.starfield span:nth-child(3) { background-size: 337px 283px; background-position: 117px 41px; animation-delay: -2s; animation-duration: 9s; }
+.starfield { position: absolute; inset: 0 0 auto; height: 850px; z-index: -1; pointer-events: none; overflow: hidden; background: radial-gradient(ellipse at 50% 0, #172340 0, transparent 70%); mask-image: linear-gradient(#000 60%, transparent); }
+.starfield span { position: absolute; inset: 0; background-image: radial-gradient(circle at 7% 23%, #c7d7ff 1px, transparent 2px), radial-gradient(circle at 83% 16%, #c7d7ff 1px, transparent 1.5px), radial-gradient(circle at 24% 71%, #c7d7ff 1px, transparent 1.5px), radial-gradient(circle at 92% 68%, #c7d7ff 1.5px, transparent 2px), radial-gradient(circle at 43% 9%, #c7d7ff 1px, transparent 1.5px); background-size: 431px 367px; opacity: .2; animation: twinkle 7s ease-in-out infinite alternate; }
+.starfield span:nth-child(2) { background-size: 593px 419px; background-position: 51px 83px; animation-delay: -4s; animation-duration: 11s; }
+.starfield span:nth-child(3) { background-size: 719px 533px; background-position: 117px 41px; animation-delay: -2s; animation-duration: 9s; }
 @keyframes twinkle { from { opacity: .12; } to { opacity: .42; } }
-.star-controls { display: flex; align-items: center; justify-content: flex-end; gap: 8px; min-height: 32px; }
-.star-toggle { accent-color: #b7c8ff; }
-.star-label { font-size: 12px; color: #aab5c7; cursor: pointer; padding-block: 8px; }
+.star-controls { display: flex; align-items: center; justify-content: flex-end; min-height: 40px; }
+.star-toggle { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.star-label { font-size: 11px; color: #aab5c7; cursor: pointer; padding: 7px 12px; border: 1px solid #344054; border-radius: 20px; }
+.star-label span { margin-right: 6px; }
+.star-toggle:checked + .star-label { color: #eef2f8; background: #293958; }
+.star-toggle:focus-visible + .star-label { outline: 2px solid #b7c8ff; outline-offset: 4px; }
 .star-toggle:checked ~ .starfield span { animation-play-state: paused; }
 .star-toggle:focus-visible { outline: 2px solid #b7c8ff; outline-offset: 4px; }
 @media (prefers-reduced-motion: reduce) {
@@ -20,21 +23,16 @@ a:focus-visible { outline: 3px solid #eab58c; outline-offset: 6px; border-radius
 .wrap { width: min(1200px, calc(100% - 96px)); margin-inline: auto; }
 .masthead { display: flex; align-items: center; justify-content: space-between; min-height: 96px; border-bottom: 1px solid #344054; gap: 24px; }
 .brand { display: inline-flex; align-items: center; gap: 8px; font-size: 27px; font-weight: 700; letter-spacing: -1px; text-decoration: none; }
-.brand img { object-fit: contain; }
+.brand img { object-fit: contain; clip-path: inset(6px round 4px); }
 nav { display: flex; gap: 32px; font-size: 14px; }
 nav a { text-decoration: none; }
 nav a:hover, .text-link:hover { text-decoration: underline; }
 nav a[aria-current="page"] { text-decoration: underline; text-underline-offset: 5px; }
 nav[aria-label="Main navigation"] { flex-wrap: wrap; row-gap: 14px; }
-.hero { text-align: center; padding-block: 72px 60px; }
-.hero { padding-block: 90px 76px; }
+.hero { text-align: center; padding-block: 66px 76px; }
 .hero h1 { font-size: clamp(40px, 6vw, 82px); }
 .hero-status { margin: 26px 0 0; font-size: 11px; letter-spacing: .6px; color: #aab5c7; }
 .nav-project { font-weight: 700; }
-.principle-band { background: #151f30; color: #eef2f8; margin-bottom: 64px; }
-.principle-band .wrap { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; padding-block: 26px; }
-.principle-band p { font-size: 14px; line-height: 1.9; color: #bec9df; margin: 0; }
-.principle-band strong { font-weight: 400; font-size: 20px; color: #fff; }
 .project-actions { justify-content: flex-start; flex-wrap: wrap; }
 .eyebrow { font-size: 10px; line-height: 1.6; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; }
 .status-dot { display: inline-block; width: 6px; height: 6px; margin: 0 7px 1px 0; border-radius: 50%; background: #a6bfff; }
@@ -44,8 +42,8 @@ h1 em { font-weight: 400; color: #b7c8ff; }
 .intro { font-size: 20px; line-height: 1.6; margin: 0; }
 .hero-detail { font-size: 15px; line-height: 1.65; color: #aab5c7; margin: 16px 0 26px; }
 .actions { display: flex; justify-content: center; align-items: center; gap: 28px; }
-.button { display: inline-flex; gap: 24px; text-decoration: none; padding: 16px 22px; background: #151f30; color: #fff; border-radius: 4px; font-size: 14px; }
-.button:hover { background: #293958; }
+.button { display: inline-flex; gap: 24px; text-decoration: none; padding: 16px 22px; background: #c3ceff; color: #101629; border-radius: 6px; font-size: 14px; }
+.button:hover { background: #dce3ff; }
 .text-link { font-size: 14px; text-decoration: none; }
 .mobile-break { display: none; }
 .workflow { border: 1px solid #344054; border-radius: 5px; padding: 30px; scroll-margin-top: 24px; }
@@ -66,8 +64,8 @@ h2 { font-size: clamp(30px, 3.1vw, 42px); line-height: 1.15; letter-spacing: -1.
 .route span { color: #eab58c; margin-inline: 8px; }
 .fare { font-size: 12px; margin: 8px 0; }
 .scope { font-size: 10px; color: #aab5c7; }
-.approval-example { background: #eab58c; color: #17131b; font-size: 13px; border-radius: 3px; padding: 14px 8px; margin-top: 18px; }
-.approval-example span { margin-left: 14px; }
+.approval-example { color: #eab58c; font-size: 13px; border-top: 1px solid #685342; padding: 14px 8px 0; margin-top: 18px; line-height: 1.8; }
+.approval-example small { color: #aab5c7; font-size: 11px; }
 .example-note { color: #aab5c7; font-size: 9px; line-height: 1.5; margin-bottom: 0; }
 .workflow-note { margin: 26px 0 0; padding-top: 16px; border-top: 1px solid #2b3547; color: #aab5c7; text-align: center; font-size: 11px; line-height: 1.6; }
 .examples { padding-block: 72px 52px; }
@@ -98,7 +96,12 @@ footer { display: flex; justify-content: space-between; align-items: center; gap
 .skip:focus { transform: none; }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
 .docs-shell { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 56px; padding-block: 48px 72px; }
-.vision { padding-block: 12px 52px; }
+.vision { padding-block: 72px 36px; }
+.mandate-token { display: inline-flex; align-items: center; gap: 18px; border: 1px solid #647ba9; border-radius: 24px; padding: 9px 14px; color: #c3ceff; font-size: 12px; }
+.verification-boundary { display: block; color: #edbc98; font-size: 12px; line-height: 1.8; }
+.simple-flow .verifying-role { border-left: 2px solid #eab58c; }
+.simple-flow .authority-roles li { display: flex; flex-direction: column; align-items: flex-start; }
+.simple-flow .authority-roles p { flex: 1; }
 .authority-flow { margin: 24px 0; border: 1px solid #344054; border-radius: 5px; overflow: hidden; }
 .authority-flow figcaption { padding: 18px 22px; border-bottom: 1px solid #2b3547; font-size: 12px; color: #b7c8ff; }
 .authority-roles { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); padding: 0; margin: 0; }
@@ -134,8 +137,8 @@ footer { display: flex; justify-content: space-between; align-items: center; gap
   .example-grid article + article { padding-left: 22px; }
 }
 @media (max-width: 680px) {
-  .principle-band .wrap { grid-template-columns: 1fr; gap: 22px; }
-  .principle-band { margin-bottom: 38px; }
+  .simple-flow .verifying-role { border-left: 0; border-top: 2px solid #eab58c; }
+  .mandate-token span { display: inline-block; transform: rotate(90deg); }
   .authority-roles { grid-template-columns: 1fr; }
   .authority-roles li + li { border-left: 0; border-top: 1px solid #2b3547; }
   .docs-shell { grid-template-columns: 1fr; gap: 28px; padding-top: 26px; }

@@ -2,6 +2,18 @@ import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
 const routes = ['/', '/concepts/', '/architecture/', '/security/', '/standards/', '/quickstart/'];
+test('homepage leads with the story and keeps stars out of documentation', async ({ page }) => {
+  await page.goto('/');
+  const order = await page.locator('main > section').evaluateAll(sections => sections.map(section => section.getAttribute('aria-labelledby')));
+  expect(order).toEqual(['headline', 'flight-title', 'vision-title', 'mandate-title', 'security-title']);
+  await expect(page.getByRole('link', { name: 'Explore on GitHub' })).toHaveAttribute('href', 'https://github.com/vollmachtio/vollmacht');
+  await expect(page.getByRole('button', { name: /approve/i })).toHaveCount(0);
+  await page.getByRole('checkbox', { name: 'Pause stars' }).focus();
+  await page.keyboard.press('Space');
+  await expect(page.locator('.starfield span').first()).toHaveCSS('animation-play-state', 'paused');
+  await page.goto('/architecture/');
+  await expect(page.locator('.starfield')).toHaveCount(0);
+});
 test('stars can be paused and respect reduced motion', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.goto('/');
