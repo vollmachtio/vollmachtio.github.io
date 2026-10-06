@@ -30,9 +30,11 @@ jobs:
       - name: Build and structural tests
         run: npm test
       - name: Install test browser
-        run: npx playwright install chromium
+        run: npx playwright install --with-deps chromium webkit
       - name: Responsive, accessibility and internal link tests
         run: npm run test:browser
+      - name: WebKit interaction and responsive tests
+        run: npm run test:webkit
       - name: Upload tested static site
         if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4

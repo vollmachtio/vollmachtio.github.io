@@ -2,6 +2,38 @@ import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
 const routes = ['/', '/concepts/', '/architecture/', '/security/', '/standards/', '/quickstart/'];
+for (const width of [390, 1440]) {
+  test('visible pause label freezes animation at ' + width, async ({ page }) => {
+    await page.setViewportSize({ width, height: 844 });
+    await page.emulateMedia({ reducedMotion: 'no-preference' });
+    await page.goto('/');
+    await page.locator('.star-label').click();
+    await expect(page.getByRole('checkbox', { name: 'Pause stars' })).toBeChecked();
+    await expect(page.locator('.motion-off')).toBeVisible();
+    const times = () => page.locator('.starfield').evaluate(el => el.getAnimations({ subtree: true }).map(a => a.currentTime));
+    await page.waitForTimeout(100);
+    const paused = await times();
+    await page.waitForTimeout(200);
+    expect(await times()).toEqual(paused);
+    await page.locator('.star-label').click();
+    await expect(page.getByRole('checkbox', { name: 'Pause stars' })).not.toBeChecked();
+    await page.waitForTimeout(200);
+    expect(await times()).not.toEqual(paused);
+  });
+}
+test('phone menu stays beside logo and opens with keyboard', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 844 });
+  await page.goto('/');
+  const summary = page.locator('.mobile-menu summary');
+  const brand = await page.locator('.brand').boundingBox();
+  const menu = await summary.boundingBox();
+  expect(Math.abs(brand.y - menu.y)).toBeLessThan(12);
+  await summary.focus();
+  await page.keyboard.press('Enter');
+  await page.getByRole('navigation', { name: 'Main navigation', exact: true }).getByRole('link', { name: 'Concepts', exact: true }).click();
+  await expect(page).toHaveURL(/\/concepts\/$/);
+  await expect(page.locator('.mobile-menu')).not.toHaveAttribute('open', '');
+});
 for (const width of [320, 390]) {
   test('phone reading sizes and controls at ' + width, async ({ page }) => {
     await page.setViewportSize({ width, height: 844 });
@@ -17,7 +49,8 @@ for (const width of [320, 390]) {
     await expect(page.locator('.star-toggle')).toBeHidden();
     for (const route of routes) {
       await page.goto(route);
-      expect(await page.locator('nav a, footer a').evaluateAll(elements => elements.every(el => el.getBoundingClientRect().height >= 44))).toBe(true);
+      await page.locator('.mobile-menu summary').click();
+      expect(await page.locator('nav a, footer a').evaluateAll(elements => elements.filter(el => el.getClientRects().length).every(el => el.getBoundingClientRect().height >= 44))).toBe(true);
     }
   });
 }

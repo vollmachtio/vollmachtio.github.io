@@ -7,16 +7,18 @@ body { margin: 0; isolation: isolate; }
 .starfield span:nth-child(3) { background-size: 719px 533px; background-position: 117px 41px; animation-delay: -2s; animation-duration: 9s; }
 @keyframes twinkle { from { opacity: .12; } to { opacity: .42; } }
 .star-controls { display: flex; align-items: center; justify-content: flex-end; min-height: 40px; }
-.star-toggle { position: absolute; opacity: 0; width: 1px; height: 1px; }
-.star-label { font-size: 11px; color: #aab5c7; cursor: pointer; padding: 7px 12px; border: 1px solid #344054; border-radius: 20px; }
+.star-toggle { position: static; opacity: 1; width: 22px; height: 22px; margin: 0 10px; accent-color: #c3ceff; cursor: pointer; }
+.star-label { font-size: 12px; color: #aab5c7; cursor: pointer; padding: 7px 12px 7px 0; }
 .star-label span { margin-right: 6px; }
-.star-toggle:checked + .star-label { color: #eef2f8; background: #293958; }
-.star-toggle:focus-visible + .star-label { outline: 2px solid #b7c8ff; outline-offset: 4px; }
-.star-toggle:checked ~ .starfield span { animation-play-state: paused; }
+.star-state { font-size: 12px; color: #aab5c7; min-width: 78px; }
+.motion-off { display: none; }
+.star-toggle:checked ~ .star-state .motion-on { display: none; }
+.star-toggle:checked ~ .star-state .motion-off { display: inline; }
+.star-toggle:checked ~ .starfield span { animation-play-state: paused; opacity: .18; }
 .star-toggle:focus-visible { outline: 2px solid #b7c8ff; outline-offset: 4px; }
 @media (prefers-reduced-motion: reduce) {
   .starfield span { animation: none; }
-  .star-controls .star-toggle, .star-controls .star-label { display: none; }
+  .star-controls .star-toggle, .star-controls .star-label, .star-controls .star-state { display: none; }
 }
 a { color: inherit; text-underline-offset: 5px; }
 a:focus-visible { outline: 3px solid #eab58c; outline-offset: 6px; border-radius: 2px; }
@@ -24,6 +26,7 @@ a:focus-visible { outline: 3px solid #eab58c; outline-offset: 6px; border-radius
 .masthead { display: flex; align-items: center; justify-content: space-between; min-height: 96px; border-bottom: 1px solid #344054; gap: 24px; }
 .brand { display: inline-flex; align-items: center; gap: 8px; font-size: 27px; font-weight: 700; letter-spacing: -1px; text-decoration: none; }
 .brand img { object-fit: contain; clip-path: inset(6px round 4px); }
+.mobile-menu { display: none; }
 nav { display: flex; gap: 32px; font-size: 14px; }
 nav a { text-decoration: none; }
 nav a:hover, .text-link:hover { text-decoration: underline; }
@@ -137,6 +140,14 @@ footer { display: flex; justify-content: space-between; align-items: center; gap
   .example-grid article + article { padding-left: 22px; }
 }
 @media (max-width: 680px) {
+  .masthead { position: relative; }
+  .masthead .desktop-nav { display: none; }
+  .mobile-menu { display: block; margin-left: auto; }
+  .mobile-menu summary { display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 8px 12px; border: 1px solid #344054; border-radius: 6px; cursor: pointer; font-size: 14px; list-style: none; }
+  .mobile-menu summary::-webkit-details-marker { display: none; }
+  .mobile-menu summary:focus-visible { outline: 2px solid #c3ceff; outline-offset: 4px; }
+  .mobile-menu nav { position: absolute; top: calc(100% - 1px); left: 0; right: 0; width: auto; z-index: 5; display: flex; flex-direction: column; gap: 0; padding: 12px; background: #121b2a; border: 1px solid #344054; border-radius: 0 0 8px 8px; box-shadow: 0 16px 32px #0008; }
+  .mobile-menu nav a { padding-inline: 12px; }
   .simple-flow .verifying-role { border-left: 0; border-top: 2px solid #eab58c; }
   .mandate-token span { display: inline-block; transform: rotate(90deg); }
   .authority-roles { grid-template-columns: 1fr; }

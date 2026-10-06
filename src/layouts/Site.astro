@@ -1,5 +1,9 @@
 ---
 const { title = 'Keep authority human', description = 'Verifiable, bounded human authority for AI agents.' } = Astro.props;
+const links = [
+  ['/', 'Home'], ['/concepts/', 'Concepts'], ['/quickstart/', 'Build with us'],
+  ['/security/', 'Security'], ['https://github.com/vollmachtio/vollmacht', 'GitHub ↗'],
+];
 ---
 <!doctype html>
 <html lang="en">
@@ -20,14 +24,21 @@ const { title = 'Keep authority human', description = 'Verifiable, bounded human
 <a class="skip" href="#main">Skip to content</a>
 <header class="masthead wrap">
 <a class="brand" href="/" aria-label="Vollmacht home"><img src="/brand.png" width="44" height="44" alt="" />Vollmacht</a>
-<nav aria-label="Main navigation">
+<nav class="desktop-nav" aria-label="Main navigation">
 <a href="/" aria-current={Astro.url.pathname === '/' ? 'page' : undefined}>Home</a>
 <a href="/concepts/">Concepts</a><a href="/quickstart/">Build with us</a><a href="/security/">Security</a><a class="nav-project" href="https://github.com/vollmachtio/vollmacht">GitHub <span aria-hidden="true">↗</span></a>
 </nav>
+<details class="mobile-menu">
+<summary>Menu <span aria-hidden="true">☰</span></summary>
+<nav aria-label="Main navigation">
+{links.map(([href, label]) => <a href={href} aria-current={Astro.url.pathname === href ? 'page' : undefined}>{label}</a>)}
+</nav>
+</details>
 </header>
 {Astro.url.pathname === '/' && <div class="star-controls wrap" role="region" aria-label="Background animation">
 <input class="star-toggle" id="pause-stars" type="checkbox" aria-label="Pause stars" />
-<label class="star-label" for="pause-stars"><span aria-hidden="true">✦</span> Pause stars</label>
+<label class="star-label" for="pause-stars">Pause stars</label>
+<span class="star-state" aria-hidden="true"><span class="motion-on">Animation on</span><span class="motion-off">Paused</span></span>
 <div class="starfield" aria-hidden="true"><span></span><span></span><span></span></div>
 </div>}
 <slot />
