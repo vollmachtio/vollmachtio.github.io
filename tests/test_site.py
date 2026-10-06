@@ -71,9 +71,14 @@ class SiteTests(unittest.TestCase):
                 self.assertTrue(href in ASSETS or href in {"https://github.com/vollmachtio", "https://github.com/vollmachtio/vollmacht"})
 
     def test_no_active_or_third_party_content(self):
-        forbidden = {"script", "iframe", "form", "input", "object", "embed", "base"}
+        forbidden = {"script", "iframe", "form", "object", "embed", "base"}
         for tag, attrs in self.elements:
             self.assertNotIn(tag, forbidden)
+            if tag == "input":
+                self.assertEqual(attrs.get("id"), "pause-stars")
+                self.assertEqual(attrs.get("type"), "checkbox")
+                self.assertNotIn("name", attrs)
+                self.assertNotIn("form", attrs)
             self.assertFalse(any(key.startswith("on") for key in attrs))
             for key in ("src", "href"):
                 if key in attrs and tag in {"img", "link"}:

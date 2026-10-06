@@ -2,6 +2,21 @@ import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
 const routes = ['/', '/concepts/', '/architecture/', '/security/', '/standards/', '/quickstart/'];
+test('stars can be paused and respect reduced motion', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.goto('/');
+  const stars = page.locator('.starfield span');
+  await expect(stars.first()).toHaveCSS('animation-name', 'twinkle');
+  await page.getByRole('checkbox', { name: 'Pause stars' }).check();
+  for (const star of await stars.all()) {
+    await expect(star).toHaveCSS('animation-play-state', 'paused');
+  }
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  for (const star of await stars.all()) {
+    await expect(star).toHaveCSS('animation-name', 'none');
+  }
+  await expect(page.getByRole('checkbox', { name: 'Pause stars' })).toBeHidden();
+});
 test('explicit Home navigation returns from every documentation page', async ({ page }) => {
   for (const route of routes.slice(1)) {
     await page.goto(route);
