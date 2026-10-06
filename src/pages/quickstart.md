@@ -1,12 +1,20 @@
 ---
 layout: ../layouts/Docs.astro
-title: Try what exists today
-description: Preview the website locally and understand the experiment boundaries.
+title: Build with us
+description: Explore the source, challenge the design, and follow the work.
 ---
 
-## Website preview
+## Start with the project
 
-Repository access is required while development remains private. Use the Node version in .node-version and Python 3.12 or later.
+The [Vollmacht repository](https://github.com/vollmachtio/vollmacht) is public. Start with its README for the current implementation status and development instructions. This website describes the direction; the repository records what is implemented and tested.
+
+There is no production-ready installation or live merchant integration to offer yet. You can help now by reviewing the architecture, testing documented experiments, and proposing concrete improvements.
+
+Read the [contribution guide](https://github.com/vollmachtio/vollmacht/blob/main/CONTRIBUTING.md) before opening a change. Follow the [security policy](https://github.com/vollmachtio/vollmacht/blob/main/SECURITY.md) for vulnerability reports rather than posting sensitive evidence in a public issue.
+
+## Website contributor preview
+
+The website repository is being prepared for publication separately. Until then, its clone requires access. Use the Node version in .node-version and Python 3.12 or later.
 
 ```sh
 git clone git@github.com:vollmachtio/vollmachtio.github.io.git
@@ -31,7 +39,7 @@ Browser tests inspect desktop and mobile widths, keyboard navigation, local link
 
 ## Protocol experiments
 
-There is no released Vollmacht installation or live GitHub authorization quickstart yet. Authorized contributors should consult the core repository's README and experiment instructions.
+Consult the core repository's README and experiment instructions for current commands, prerequisites and known limitations. This page deliberately avoids duplicating an evolving implementation guide.
 
 The Rust WebAuthn probe tests a browser ceremony. The SimpleWebAuthn experiment assesses operation-derived challenges. Neither is a production mandate service or GitHub enforcement integration. Synthetic test success is not evidence that a physical Touch ID ceremony was tested.
 

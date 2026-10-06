@@ -13,6 +13,15 @@ nav a:hover, .text-link:hover { text-decoration: underline; }
 nav a[aria-current="page"] { text-decoration: underline; text-underline-offset: 5px; }
 nav[aria-label="Main navigation"] { flex-wrap: wrap; row-gap: 14px; }
 .hero { text-align: center; padding-block: 72px 60px; }
+.hero { padding-block: 90px 76px; }
+.hero h1 { font-size: clamp(40px, 6vw, 82px); }
+.hero-status { margin: 26px 0 0; font-size: 11px; letter-spacing: .6px; color: #62655f; }
+.nav-project { font-weight: 700; }
+.principle-band { background: #252b24; color: #faf9f5; margin-bottom: 64px; }
+.principle-band .wrap { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; padding-block: 26px; }
+.principle-band p { font-size: 14px; line-height: 1.9; color: #d4dacc; margin: 0; }
+.principle-band strong { font-weight: 400; font-size: 20px; color: #fff; }
+.project-actions { justify-content: flex-start; flex-wrap: wrap; }
 .eyebrow { font-size: 10px; line-height: 1.6; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; }
 .status-dot { display: inline-block; width: 6px; height: 6px; margin: 0 7px 1px 0; border-radius: 50%; background: #43634b; }
 h1, h2, .example-grid h3 { font-family: Georgia, 'Times New Roman', serif; font-weight: 400; }
@@ -111,6 +120,8 @@ footer { display: flex; justify-content: space-between; align-items: center; gap
   .example-grid article + article { padding-left: 22px; }
 }
 @media (max-width: 680px) {
+  .principle-band .wrap { grid-template-columns: 1fr; gap: 22px; }
+  .principle-band { margin-bottom: 38px; }
   .authority-roles { grid-template-columns: 1fr; }
   .authority-roles li + li { border-left: 0; border-top: 1px solid #d8dad1; }
   .docs-shell { grid-template-columns: 1fr; gap: 28px; padding-top: 26px; }

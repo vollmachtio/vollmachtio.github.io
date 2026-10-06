@@ -68,7 +68,7 @@ class SiteTests(unittest.TestCase):
             if href.startswith("#") and href != "#":
                 self.assertIn(href[1:], ids)
             if tag == "a" and not href.startswith("#"):
-                self.assertTrue(href in ASSETS or href == "https://github.com/vollmachtio")
+                self.assertTrue(href in ASSETS or href in {"https://github.com/vollmachtio", "https://github.com/vollmachtio/vollmacht"})
 
     def test_no_active_or_third_party_content(self):
         forbidden = {"script", "iframe", "form", "input", "object", "embed", "base"}

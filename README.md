@@ -41,3 +41,19 @@ The protocol is experimental. Docs distinguish intended guarantees from feasibil
 The repository remains private and Pages disabled. No deployment workflow, custom domain or public license is added. Publishing or changing visibility requires owner approval.
 
 Keep PRs focused and obtain independent adversarial review. Copilot is supplementary, not a replacement.
+
+## Public launch gate
+
+The core repository is public as of 2026-10-05. This website repository remains private. The website leads with the target architecture; current implementation instructions live in the core repository.
+
+Before making this repository public or enabling hosting:
+
+- Review all Git history, PR discussions, Actions logs and artifacts for credentials and unapproved personal information. A core-repository audit does not cover this repository.
+- Confirm the website source license and the intended publication of author metadata.
+- Refresh the dated standards snapshot before announcing standards-related claims.
+- Require passing exact-head CI and an independent adversarial review.
+- Confirm the initial hostname. The organization Pages default is vollmachtio.github.io; a custom domain needs a separate ownership and DNS decision.
+- Add and review a static Pages workflow that uploads only dist, never the source checkout. Keep deployment disabled until owner approval.
+- After explicit launch approval, change visibility, enable Pages, verify HTTPS, exercise every route and set available main-branch protections.
+
+Launch preparation adds no hiring pages, corporate biography, pricing, waitlist, tracking, customer logos or claims of shipped integrations. Do not mistake public source for production readiness.
