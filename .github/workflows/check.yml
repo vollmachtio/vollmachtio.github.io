@@ -6,6 +6,9 @@ on:
     branches: [main]
 permissions:
   contents: read
+concurrency:
+  group: website-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 env:
   ASTRO_TELEMETRY_DISABLED: '1'
 jobs:
