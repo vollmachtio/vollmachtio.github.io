@@ -2,7 +2,7 @@
 
 The vision and documentation website for [Vollmacht](https://github.com/vollmachtio/vollmacht): verifiable human authority for AI agents.
 
-This repository is public. Website hosting and custom-domain setup are pending. The site presents the target design, not shipped integrations or a production-ready authorization service.
+This repository is public. The deployment workflow publishes the static site to GitHub Pages after checks pass on main. Custom-domain setup is separate. The site presents the target design, not shipped integrations or a production-ready authorization service.
 
 Astro generates static HTML from shared layouts and Markdown. No client JavaScript, analytics, external fonts, authentication or live approvals. Decorative stars support pause and reduced-motion preferences.
 
@@ -42,7 +42,7 @@ Add routes to the preview allowlist and browser route list together. CI checks g
 
 The protocol is experimental. Docs distinguish intended guarantees from feasibility results and label integrations illustrative. Standards metadata was checked against primary sources on 2026-09-22; this is a selected-source overview, not a conformance claim.
 
-The repository became public on 2026-10-05 with owner approval. Pages remains disabled. No deployment workflow or custom domain is configured. A source license still needs to be selected; public visibility alone does not grant an open-source license.
+The repository became public on 2026-10-05 with owner approval. Pages uses GitHub Actions, not direct source-branch publishing. A source license still needs to be selected; public visibility alone does not grant an open-source license.
 
 Keep PRs focused and obtain independent adversarial review. Copilot is supplementary, not a replacement.
 
@@ -57,7 +57,17 @@ Before enabling hosting:
 - Refresh the dated standards snapshot before announcing standards-related claims.
 - Require passing exact-head CI and an independent adversarial review.
 - Confirm the initial hostname. The organization Pages default is vollmachtio.github.io; a custom domain needs a separate ownership and DNS decision.
-- Add and review a static Pages workflow that uploads only dist, never the source checkout. Keep deployment disabled until owner approval.
+- Review deployment changes: only dist is uploaded, never the source checkout. PR builds cannot deploy; deployment requires both checks to pass on main.
 - After explicit launch approval, enable Pages, verify HTTPS, exercise every route and set available main-branch protections.
 
 Launch preparation adds no hiring pages, corporate biography, pricing, waitlist, tracking, customer logos or claims of shipped integrations. Do not mistake public source for production readiness.
+
+## Deployment
+
+In repository Settings → Pages, select GitHub Actions as the source. Merging to main runs all checks and publishes only the generated dist artifact. A manual run of Website checks on main can retry a deployment. Runs on other branches and pull requests cannot upload or deploy a Pages artifact.
+
+The deploy job has Pages and OIDC permissions only; build jobs keep read-only repository access. External-link failures block publication as well as build, audit and browser-test failures. No AWS credentials are needed by this workflow.
+
+For a custom domain, first verify ownership in the organization Pages settings. Add the exact domain in repository Pages settings before pointing Route 53 traffic at GitHub. Retain the verification TXT record. Configure apex A/AAAA records and a www CNAME using [GitHub's current guidance](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site), then enable Enforce HTTPS after certificate provisioning. Do not add wildcard records or overwrite unrelated mail records.
+
+For rollback, revert the faulty change through a reviewed PR. The resulting main build passes the same gates before deployment.
