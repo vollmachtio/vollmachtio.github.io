@@ -14,10 +14,10 @@ Read the [contribution guide](https://github.com/vollmachtio/vollmacht/blob/main
 
 ## Website contributor preview
 
-The website repository is being prepared for publication separately. Until then, its clone requires access. Use the Node version in .node-version and Python 3.12 or later.
+The website repository is public; no GitHub account is needed to clone it over HTTPS. Hosting is being configured separately. Use the Node version in .node-version and Python 3.12 or later.
 
 ```sh
-git clone git@github.com:vollmachtio/vollmachtio.github.io.git
+git clone https://github.com/vollmachtio/vollmachtio.github.io.git
 cd vollmachtio.github.io
 npm ci
 npm run build
