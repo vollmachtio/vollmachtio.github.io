@@ -7,14 +7,10 @@ import AuthorityFlow from "../components/AuthorityFlow.astro";
     <section class="hero wrap" aria-labelledby="headline">
       <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> Verifiable human authority for AI agents</p>
       <h1 id="headline">Approve the commitment.<br><em>Not every step.</em></h1>
-      <p class="intro">Give agents room to work.<br class="mobile-break"> Keep control of the actions that matter.</p>
-      <p class="hero-detail">Our vision: authority that travels with the agent.<br>Bounded by you. Verified where the action happens.</p>
-      <div class="actions"><a class="button" href="#how-it-works">Explore the design <span aria-hidden="true">↓</span></a><a class="text-link" href="https://github.com/vollmachtio">Follow on GitHub <span aria-hidden="true">↗</span></a></div>
-    </section>
-    <section class="vision wrap" aria-labelledby="vision-title">
-      <div class="section-heading"><p class="eyebrow">The system we are building toward</p><h2 id="vision-title">Your authority.<br>Across agents and services.</h2></div>
-      <AuthorityFlow />
-      <p class="caption"><a href="/architecture/">Explore service-side verification and gateway adoption →</a></p>
+      <p class="intro">Agents can act. Who gave them the authority?</p>
+      <p class="hero-detail">We’re building an open-source foundation for bounded human authority.<br>Permission that travels with your agent, verified before the commitment.</p>
+      <div class="actions"><a class="button" href="https://github.com/vollmachtio/vollmacht">Explore on GitHub <span aria-hidden="true">↗</span></a><a class="text-link" href="#how-it-works">See how it works <span aria-hidden="true">↓</span></a></div>
+      <p class="hero-status">Open source · Early development · Built in the open</p>
     </section>
     <section class="workflow wrap" id="how-it-works" aria-labelledby="flight-title">
       <div class="section-top"><h2 id="flight-title">A flight, from search to purchase.</h2><span class="eyebrow">Illustrative workflow</span></div>
@@ -31,29 +27,26 @@ import AuthorityFlow from "../components/AuthorityFlow.astro";
           <span class="step-number">04 · Approval boundary</span><h3>Buy the ticket</h3>
           <p class="route">SFO <span aria-hidden="true">→</span><span class="sr-only">to</span> JFK</p>
           <p class="fare">$480 total · Nonrefundable</p><p class="scope">One purchase · Expires in 2 minutes</p>
-          <div class="approval-example">Approve with passkey <span aria-hidden="true">↗</span></div>
+          <p class="approval-example"><span aria-hidden="true">◇</span> Your approval is required<br><small>Passkey verification · Concept</small></p>
           <p class="example-note">Example only. No purchase or approval is performed.</p>
         </div>
       </div>
       <p class="workflow-note">Your policy defines when fresh approval is required. Routine work stays within the permissions you already granted.</p>
     </section>
-    <section class="examples wrap" aria-labelledby="examples-title">
-      <div class="section-heading"><p class="eyebrow">The same idea, beyond travel</p><h2 id="examples-title">Autonomy with a clear boundary.</h2></div>
-      <div class="example-grid">
-        <article><span class="category">01 / Engineering</span><h3>Ship code.</h3><p>Let an agent read code, run tests and prepare a pull request within its assigned scope.</p><p class="boundary"><span aria-hidden="true">↳</span> Ask before a protected merge.</p></article>
-        <article><span class="category">02 / Data</span><h3>Keep what matters.</h3><p>Let an agent inspect and organize permitted data. Set a separate boundary for irreversible changes.</p><p class="boundary"><span aria-hidden="true">↳</span> Ask before permanent deletion.</p></article>
-        <article><span class="category">03 / Spending</span><h3>Choose, then commit.</h3><p>Let an agent research and compare. Reserve approval for a purchase outside its existing authority.</p><p class="boundary"><span aria-hidden="true">↳</span> Ask before a financial commitment.</p></article>
-      </div>
-      <p class="caption">Illustrative integrations in the target design. Each service applies its own policy; existing authority determines whether fresh approval is needed.</p>
+    <section class="vision wrap" aria-labelledby="vision-title">
+      <div class="section-heading"><p class="eyebrow">The system we are building toward</p><h2 id="vision-title">One permission.<br>Checked where it matters.</h2></div>
+      <AuthorityFlow simple />
+      <p class="caption"><a href="/architecture/">Explore service-side verification and gateway adoption →</a></p>
     </section>
     <section class="concept wrap" aria-labelledby="mandate-title">
       <div><p class="eyebrow">A small permission. A precise purpose.</p><h2 id="mandate-title">A mandate,<br>not a blank check.</h2><p>In the Vollmacht design, a Human Mandate binds an agent to a specific action, resource and set of limits. The receiving service or trusted gateway checks that authority before committing the action.</p><p>Vollmacht is German for authority to act on someone else’s behalf. That is the idea: delegated authority, not unrestricted access.</p></div>
       <div class="receipt"><div class="receipt-title">Human Mandate <span>Concept</span></div><dl><div><dt>Agent</dt><dd>Your travel assistant</dd></div><div><dt>Action</dt><dd>Purchase selected ticket</dd></div><div><dt>Resource</dt><dd>Exact reviewed itinerary</dd></div><div><dt>Limit</dt><dd>$480 total · Once</dd></div><div><dt>Validity</dt><dd>2 minutes</dd></div></dl><p>A different itinerary or higher price falls outside this permission.</p></div>
     </section>
+    <p class="caption wrap">Beyond travel: protected merges, permanent deletion, and financial commitments.<br>Illustrative integrations in the target design. Each service applies its own policy.</p>
     <section class="security wrap" id="security" aria-labelledby="security-title">
       <div class="section-heading"><p class="eyebrow">Designed for meaningful oversight</p><h2 id="security-title">Less interruption.<br>More intentional approval.</h2></div>
       <div class="security-grid"><article><h3>No prompt for every step.</h3><p>Repeated prompts invite reflexive approval. The goal is to ask at selected consequential boundaries, not turn every tool call into a biometric ceremony.</p></article><article><h3>Your biometrics stay local.</h3><p>Passkeys use Touch ID or another supported verification method. Vollmacht does not need your fingerprint. User verification is not proof of humanity or proof that you understood a request.</p></article><article><h3>Enforcement matters.</h3><p>A mandate only helps when consequential actions pass through a trusted enforcement layer. It cannot stop an agent that can bypass that layer with its own credentials.</p></article></div>
     </section>
-    <aside class="project-status wrap" aria-labelledby="status-title"><div><p class="eyebrow">Available today</p><h2 id="status-title">Explore the design.<br>Help build the next step.</h2></div><div><p>Vollmacht is in experimental development. Today: design documentation and feasibility experiments. This site presents our target architecture, not shipped merchant or payment integrations.</p><p>Do not use it as the sole control for production-critical operations. Local GitHub enforcement is the first planned adoption path, not the limit of the vision.</p><a class="text-link" href="/quickstart/">See what you can try today <span aria-hidden="true">↗</span></a></div></aside>
+    <aside class="project-status wrap" aria-labelledby="status-title"><div><p class="eyebrow">Available today</p><h2 id="status-title">An open project.<br>A bigger possibility.</h2></div><div><p>The source is public. Explore the design, inspect the experiments, and help shape the path from human approval to service-side enforcement.</p><p>Vollmacht is in early development. This site presents the vision, not shipped merchant or payment integrations. Do not use it as the sole control for production-critical operations.</p><div class="actions project-actions"><a class="button" href="https://github.com/vollmachtio/vollmacht">View the source ↗</a><a class="text-link" href="/quickstart/">Start exploring →</a></div></div></aside>
   </main>
 </Site>

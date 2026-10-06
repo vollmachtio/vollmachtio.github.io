@@ -1,6 +1,10 @@
 # Vollmacht website
 
-Private, unpublished website development. Astro generates static HTML from shared layouts and Markdown. No client JavaScript, analytics, external fonts, authentication or live approvals.
+The vision and documentation website for [Vollmacht](https://github.com/vollmachtio/vollmacht): verifiable human authority for AI agents.
+
+This repository is public. Website hosting and custom-domain setup are pending. The site presents the target design, not shipped integrations or a production-ready authorization service.
+
+Astro generates static HTML from shared layouts and Markdown. No client JavaScript, analytics, external fonts, authentication or live approvals. Decorative stars support pause and reduced-motion preferences.
 
 ## Run locally
 
@@ -38,6 +42,22 @@ Add routes to the preview allowlist and browser route list together. CI checks g
 
 The protocol is experimental. Docs distinguish intended guarantees from feasibility results and label integrations illustrative. Standards metadata was checked against primary sources on 2026-09-22; this is a selected-source overview, not a conformance claim.
 
-The repository remains private and Pages disabled. No deployment workflow, custom domain or public license is added. Publishing or changing visibility requires owner approval.
+The repository became public on 2026-10-05 with owner approval. Pages remains disabled. No deployment workflow or custom domain is configured. A source license still needs to be selected; public visibility alone does not grant an open-source license.
 
 Keep PRs focused and obtain independent adversarial review. Copilot is supplementary, not a replacement.
+
+## Public launch gate
+
+Both repositories are public. The website leads with the target architecture; current implementation instructions live in the core repository.
+
+Before enabling hosting:
+
+- Review all Git history, PR discussions, Actions logs and artifacts for credentials and unapproved personal information. A core-repository audit does not cover this repository.
+- Confirm the website source license and the intended publication of author metadata.
+- Refresh the dated standards snapshot before announcing standards-related claims.
+- Require passing exact-head CI and an independent adversarial review.
+- Confirm the initial hostname. The organization Pages default is vollmachtio.github.io; a custom domain needs a separate ownership and DNS decision.
+- Add and review a static Pages workflow that uploads only dist, never the source checkout. Keep deployment disabled until owner approval.
+- After explicit launch approval, enable Pages, verify HTTPS, exercise every route and set available main-branch protections.
+
+Launch preparation adds no hiring pages, corporate biography, pricing, waitlist, tracking, customer logos or claims of shipped integrations. Do not mistake public source for production readiness.

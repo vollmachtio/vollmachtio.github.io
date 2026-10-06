@@ -39,7 +39,6 @@ Audit events should omit secrets and routine assertion evidence. A local hash ch
 
 ## Website privacy
 
-This website is static. It has no live approval ceremony, purchase form, analytics or runtime JavaScript. Development remains private and no deployment is configured.
+This website is static. It has no live approval ceremony, purchase form, analytics or runtime JavaScript. The source repository is public; hosting and custom-domain setup are pending.
 
 Use the core repository's SECURITY.md through an authorized private channel to report suspected vulnerabilities. Do not publish credentials, assertion evidence or sensitive logs in website issues.
-

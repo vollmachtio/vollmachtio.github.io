@@ -7,7 +7,12 @@ const { title = 'Keep authority human', description = 'Verifiable, bounded human
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="description" content={description} />
-<meta name="color-scheme" content="light" />
+<meta name="color-scheme" content="dark" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Vollmacht" />
+<meta property="og:title" content={title + ' · Vollmacht'} />
+<meta property="og:description" content={description} />
+<meta name="twitter:card" content="summary" />
 <title>{title} · Vollmacht</title>
 <link rel="stylesheet" href="/style.css" />
 </head>
@@ -17,9 +22,14 @@ const { title = 'Keep authority human', description = 'Verifiable, bounded human
 <a class="brand" href="/" aria-label="Vollmacht home"><img src="/brand.png" width="44" height="44" alt="" />Vollmacht</a>
 <nav aria-label="Main navigation">
 <a href="/" aria-current={Astro.url.pathname === '/' ? 'page' : undefined}>Home</a>
-<a href="/concepts/">Concepts</a><a href="/quickstart/">Docs</a><a href="/security/">Security</a><a href="https://github.com/vollmachtio">GitHub <span aria-hidden="true">↗</span></a>
+<a href="/concepts/">Concepts</a><a href="/quickstart/">Build with us</a><a href="/security/">Security</a><a class="nav-project" href="https://github.com/vollmachtio/vollmacht">GitHub <span aria-hidden="true">↗</span></a>
 </nav>
 </header>
+{Astro.url.pathname === '/' && <div class="star-controls wrap" role="region" aria-label="Background animation">
+<input class="star-toggle" id="pause-stars" type="checkbox" aria-label="Pause stars" />
+<label class="star-label" for="pause-stars"><span aria-hidden="true">✦</span> Pause stars</label>
+<div class="starfield" aria-hidden="true"><span></span><span></span><span></span></div>
+</div>}
 <slot />
 <footer class="wrap"><span class="footer-brand">Vollmacht</span><span>Verifiable human authority for AI agents.</span><a href="/standards/">Standards</a><a href="#main">Back to top ↑</a></footer>
 </body>

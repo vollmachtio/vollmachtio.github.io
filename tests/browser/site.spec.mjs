@@ -2,6 +2,33 @@ import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
 const routes = ['/', '/concepts/', '/architecture/', '/security/', '/standards/', '/quickstart/'];
+test('homepage leads with the story and keeps stars out of documentation', async ({ page }) => {
+  await page.goto('/');
+  const order = await page.locator('main > section').evaluateAll(sections => sections.map(section => section.getAttribute('aria-labelledby')));
+  expect(order).toEqual(['headline', 'flight-title', 'vision-title', 'mandate-title', 'security-title']);
+  await expect(page.getByRole('link', { name: 'Explore on GitHub' })).toHaveAttribute('href', 'https://github.com/vollmachtio/vollmacht');
+  await expect(page.getByRole('button', { name: /approve/i })).toHaveCount(0);
+  await page.getByRole('checkbox', { name: 'Pause stars' }).focus();
+  await page.keyboard.press('Space');
+  await expect(page.locator('.starfield span').first()).toHaveCSS('animation-play-state', 'paused');
+  await page.goto('/architecture/');
+  await expect(page.locator('.starfield')).toHaveCount(0);
+});
+test('stars can be paused and respect reduced motion', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.goto('/');
+  const stars = page.locator('.starfield span');
+  await expect(stars.first()).toHaveCSS('animation-name', 'twinkle');
+  await page.getByRole('checkbox', { name: 'Pause stars' }).check();
+  for (const star of await stars.all()) {
+    await expect(star).toHaveCSS('animation-play-state', 'paused');
+  }
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  for (const star of await stars.all()) {
+    await expect(star).toHaveCSS('animation-name', 'none');
+  }
+  await expect(page.getByRole('checkbox', { name: 'Pause stars' })).toBeHidden();
+});
 test('explicit Home navigation returns from every documentation page', async ({ page }) => {
   for (const route of routes.slice(1)) {
     await page.goto(route);
