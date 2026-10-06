@@ -2,6 +2,25 @@ import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
 const routes = ['/', '/concepts/', '/architecture/', '/security/', '/standards/', '/quickstart/'];
+for (const width of [320, 390]) {
+  test('phone reading sizes and controls at ' + width, async ({ page }) => {
+    await page.setViewportSize({ width, height: 844 });
+    await page.goto('/');
+    for (const selector of ['.steps p', '.fare', '.scope', '.example-note', '.workflow-note', '.caption', '.receipt dd', '.security-grid p']) {
+      expect(await page.locator(selector).evaluateAll(elements => elements.every(el => parseFloat(getComputedStyle(el).fontSize) >= 14)), selector).toBe(true);
+    }
+    const steps = await page.locator('.steps li').evaluateAll(elements => elements.map(el => el.getBoundingClientRect().top));
+    expect(steps[1]).toBeGreaterThan(steps[0]);
+    expect(steps[2]).toBeGreaterThan(steps[1]);
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await expect(page.locator('.star-label')).toBeHidden();
+    await expect(page.locator('.star-toggle')).toBeHidden();
+    for (const route of routes) {
+      await page.goto(route);
+      expect(await page.locator('nav a, footer a').evaluateAll(elements => elements.every(el => el.getBoundingClientRect().height >= 44))).toBe(true);
+    }
+  });
+}
 test('homepage leads with the story and keeps stars out of documentation', async ({ page }) => {
   await page.goto('/');
   const order = await page.locator('main > section').evaluateAll(sections => sections.map(section => section.getAttribute('aria-labelledby')));
